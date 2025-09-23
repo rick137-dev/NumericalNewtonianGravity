@@ -4,10 +4,10 @@ import scipy
 
 class SystemSolver:
 
-    def solveEulerMethod(self):
+    def solveEulerMethod(self, gradientFunction):
         pass
 
-    def solveRungeKuttaExplicit(self):
+    def solveMidpointMethod(self, gradientFunction):
         pass
 
     def solveRungeKuttaScipy(self):
