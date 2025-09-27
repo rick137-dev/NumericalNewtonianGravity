@@ -4,6 +4,7 @@ import scipy
 
 class SystemSolver:
 
+
     def solveEulerMethod(self, gradientFunction):
         pass
 

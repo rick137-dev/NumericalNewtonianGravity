@@ -15,6 +15,10 @@ class Star:
     def changeMass(self, mass):
         self.mass = mass
 
+    def getPosition(self):
+        return self.initial_position
+
+
     def setPosition(self, position):
         self.initial_position = position
 
