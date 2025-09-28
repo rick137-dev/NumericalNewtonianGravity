@@ -10,9 +10,6 @@ class StarSystem:
     def getStars(self):
         return self.stars
 
-    def setMergeDistance(self, distance):
-        self.merge_distance = distance
-
     def addStar(self, star: Star):
         self.stars.append(star)
 
@@ -24,5 +21,5 @@ class StarSystem:
         return len(self.stars)
 
     def calculateTrajectories(self, method = "RKScipy"):
-        pass
+        return None
 
