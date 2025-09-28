@@ -18,6 +18,9 @@ class Star:
     def getPosition(self):
         return self.initial_position
 
+    def getVelocity(self):
+        return self.initial_velocity
+
 
     def setPosition(self, position):
         self.initial_position = position
