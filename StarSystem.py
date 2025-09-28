@@ -48,27 +48,29 @@ class StarSystem:
 
         L = len(Y_pos)
 
-        for i in range(0,L//2,2):
+        for i in range(0,L,2):
 
             pos_i = [Y_pos[i],Y_pos[i+1]]
-            mass_i = masses[i]
+            i_mass = i//2 #Correct indexing
+            mass_i = masses[i_mass]
 
-            dx , dy = float(0), float(0)
+            ax , ay = float(0), float(0)
 
-            for j in range(0,L//2,2):
+            for j in range(0,L,2):
 
                 pos_j = [Y_pos[j], Y_pos[j + 1]]
-                mass_j = masses[j]
+                j_mass = j // 2  # Correct indexing
+                mass_j = masses[j_mass]
 
-                if mass_j >0 and mass_i >0 and pos_i != pos_j:
-                    squared_distance = StarSystem.getCubedDistance(pos_i,pos_j)
+                if mass_j >0 and mass_i >0 and i!=j:
+                    cubed_distance = StarSystem.getCubedDistance(pos_i,pos_j)
 
-                    dx = dx + (mass_j * self.gravitational_constant *(pos_i[0] - pos_j[0]))/squared_distance
+                    ax = ax + (mass_j * self.gravitational_constant *(pos_j[0]-pos_i[0]))/cubed_distance
 
-                    dy = dy + (mass_j * self.gravitational_constant *(pos_i[1] - pos_j[1]))/squared_distance
+                    ay = ay + (mass_j * self.gravitational_constant *(pos_j[1]-pos_i[1]))/cubed_distance
 
 
-            Y_new.extend([dx,dy])
+            Y_new.extend([ax,ay])
 
 
 
