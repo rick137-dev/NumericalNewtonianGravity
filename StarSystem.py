@@ -25,11 +25,11 @@ class StarSystem:
         return len(self.stars)
 
     @staticmethod
-    def getSquaredDistance(pos_1, pos_2):
+    def getCubedDistance(pos_1, pos_2):
         x1 , y1 = pos_1
         x2, y2 = pos_2
-        distance_squared = ((x1-x2)**2) + ((y1-y2)**2)
-        return max(distance_squared,1e-3) #This is for numerical accuracy in the derivative function when the squared distance is in the denominator
+        distance = np.sqrt(((x1-x2)**2) + ((y1-y2)**2))
+        return max(distance**3,1e-3) #This is for numerical accuracy in the derivative function when the squared distance is in the denominator
 
 
 
@@ -61,11 +61,11 @@ class StarSystem:
                 mass_j = masses[j]
 
                 if mass_j >0 and mass_i >0 and pos_i != pos_j:
-                    squared_distance = StarSystem.getSquaredDistance(pos_i,pos_j)
+                    squared_distance = StarSystem.getCubedDistance(pos_i,pos_j)
 
-                    dx = dx + (mass_j * self.gravitational_constant *(pos_i[0] - pos_j[0]))//squared_distance
+                    dx = dx + (mass_j * self.gravitational_constant *(pos_i[0] - pos_j[0]))/squared_distance
 
-                    dy = dy + (mass_j * self.gravitational_constant *(pos_i[1] - pos_j[1]))//squared_distance
+                    dy = dy + (mass_j * self.gravitational_constant *(pos_i[1] - pos_j[1]))/squared_distance
 
 
             Y_new.extend([dx,dy])
