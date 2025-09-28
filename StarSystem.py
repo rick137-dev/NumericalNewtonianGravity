@@ -22,6 +22,15 @@ class StarSystem:
         return len(self.stars)
 
     @staticmethod
+    def getSquaredDistance(pos_1, pos_2):
+        x1 , y1 = pos_1
+        x2, y2 = pos_2
+        distance_squared = ((x1-x2)**2) + ((y1-y2)**2)
+        return max(distance_squared,1e-3)
+
+
+
+    @staticmethod
     def getSystemDerivative(time, Y, masses):
         N = len(Y)
 
