@@ -1,3 +1,4 @@
+from Solver import SystemSolver
 from Star import Star
 
 
@@ -20,6 +21,11 @@ class StarSystem:
     def getStarCount(self):
         return len(self.stars)
 
-    def calculateTrajectories(self, method = "RKScipy"):
-        return None
+    @staticmethod
+    def getSystemDerivative(time, Y):
+        pass
+
+
+    def calculateTrajectories(self, step_size, end_time, method = "RKScipy"):
+        return SystemSolver.generalSolver(self,step_size, end_time, method)
 
