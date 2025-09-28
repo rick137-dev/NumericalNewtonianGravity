@@ -23,7 +23,9 @@ class StarSystem:
 
     @staticmethod
     def getSystemDerivative(time, Y):
-        pass
+        N = len(Y)
+
+        return None
 
 
     def calculateTrajectories(self, step_size, end_time, method = "RKScipy"):
