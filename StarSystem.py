@@ -39,14 +39,23 @@ class StarSystem:
 
     def getSystemDerivative(self, time, Y, masses):
         N = len(Y)
+
+        if (N % 4) != 0:
+            raise ValueError("State vector length must be divisible by 4 (x,y,v_x,v_y per body)")
+        n_bodies = N // 4
+
+        if len(masses) != n_bodies:
+            raise ValueError(f"Masses must have length {n_bodies}, got {masses.size}")
+
+
         Y_new = []
 
-        for i in range(N//2,N):
+        for i in range(n_bodies,N):
             Y_new.append(Y[i])
 
         Y_pos = []
 
-        for i in range(N//2):
+        for i in range(n_bodies):
             Y_pos.append(Y[i])
 
         L = len(Y_pos)
