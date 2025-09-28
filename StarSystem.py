@@ -6,10 +6,11 @@ from Star import Star
 
 class StarSystem:
 
-    def __init__(self, gravitational_constant = 1):
+    def __init__(self, gravitational_constant = 1, distance_epsilon = 0):
         self.stars = []
         self.system_trajectories = None
         self.gravitational_constant = gravitational_constant
+        self.distance_epsilon = distance_epsilon
 
     def getStars(self):
         return self.stars
@@ -24,12 +25,14 @@ class StarSystem:
     def getStarCount(self):
         return len(self.stars)
 
-    @staticmethod
-    def getCubedDistance(pos_1, pos_2):
+
+    def getCubedDistance(self,pos_1, pos_2):
         x1 , y1 = pos_1
         x2, y2 = pos_2
-        distance = np.sqrt(((x1-x2)**2) + ((y1-y2)**2))
-        return max(distance**3,1e-3) #This is for numerical accuracy in the derivative function when the squared distance is in the denominator
+
+        #The epsilon term is for numerical accuracy at small distances
+        distance = np.sqrt(((x1-x2)**2) + ((y1-y2)**2) + (self.distance_epsilon**2))
+        return distance**3
 
 
 
@@ -63,7 +66,7 @@ class StarSystem:
                 mass_j = masses[j_mass]
 
                 if mass_j >0 and mass_i >0 and i!=j:
-                    cubed_distance = StarSystem.getCubedDistance(pos_i,pos_j)
+                    cubed_distance = self.getCubedDistance(pos_i,pos_j)
 
                     ax = ax + (mass_j * self.gravitational_constant *(pos_j[0]-pos_i[0]))/cubed_distance
 
