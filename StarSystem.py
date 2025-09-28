@@ -22,7 +22,7 @@ class StarSystem:
         return len(self.stars)
 
     @staticmethod
-    def getSystemDerivative(time, Y):
+    def getSystemDerivative(time, Y, masses):
         N = len(Y)
 
         return None
