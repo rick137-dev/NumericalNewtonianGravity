@@ -1,12 +1,12 @@
 import numpy as np
 import scipy
-from StarSystem import StarSystem
+
 
 
 class SystemSolver:
 
     @staticmethod
-    def generalSolver(starSystem: StarSystem, step_size, end_time, method = "RKScipy", absolute_tolerance = 1e-6, relative_tolerance = 1e-3):
+    def generalSolver(starSystem, step_size, end_time, method = "RKScipy", absolute_tolerance = 1e-6, relative_tolerance = 1e-3):
         assert method == "RkScipy" or method == "Euler" or method =="Midpoint" , "Method name not found!"
 
         if method == "Euler":
@@ -17,7 +17,7 @@ class SystemSolver:
             return SystemSolver.solveRungeKuttaScipy(starSystem, step_size, end_time,absolute_tolerance, relative_tolerance)
 
     @staticmethod
-    def getInitialState(starSystem : StarSystem):
+    def getInitialState(starSystem):
         Y_0 = []
         masses = []
 
@@ -41,7 +41,7 @@ class SystemSolver:
 
 
     @staticmethod
-    def solveEulerMethod(starSystem: StarSystem, step_size, end_time):
+    def solveEulerMethod(starSystem, step_size, end_time):
         trajectory = []
         Y_0 , masses = SystemSolver.getInitialState(starSystem)
 
@@ -61,7 +61,7 @@ class SystemSolver:
 
     #This method uses 1 midpoint, so it is equivalent to Runge Kutta 2
     @staticmethod
-    def solveMidpointMethod(starSystem: StarSystem, step_size, end_time):
+    def solveMidpointMethod(starSystem, step_size, end_time):
         trajectory = []
         Y_0, masses = SystemSolver.getInitialState(starSystem)
 
@@ -83,7 +83,7 @@ class SystemSolver:
 
     #Scipy solve_ivp uses by default Runge Kutta 4-5, using standard order 5 and an extra order for adaptive step size
     @staticmethod
-    def solveRungeKuttaScipy(starSystem: StarSystem, step_size, end_time,absolute_tolerance, relative_tolerance):
+    def solveRungeKuttaScipy(starSystem, step_size, end_time,absolute_tolerance, relative_tolerance):
 
         Y_0 , masses = SystemSolver.getInitialState(starSystem)
 
