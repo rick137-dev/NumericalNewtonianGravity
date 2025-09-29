@@ -30,7 +30,7 @@ class StarSystem:
         x1 , y1 = pos_1
         x2, y2 = pos_2
 
-        #The epsilon term is for numerical accuracy at small distances
+        #The epsilon term is for numerical softening at small distances to avoid singularities
         distance = np.sqrt(((x1-x2)**2) + ((y1-y2)**2) + (self.distance_epsilon**2))
         return distance**3
 
@@ -38,27 +38,26 @@ class StarSystem:
 
 
     def getSystemDerivative(self, time, Y, masses):
-        N = len(Y)
+
+        masses = np.array(masses, dtype=float)
+        Y = np.array(Y, dtype=float)
+
+        N = Y.size
 
         if (N % 4) != 0:
-            raise ValueError("State vector length must be divisible by 4 (x,y,v_x,v_y per body)")
+            raise ValueError("State vector length must be divisible by 4 since each body has 2 numbers for position and 2 numbers for velocity")
         n_bodies = N // 4
 
-        if len(masses) != n_bodies:
+        if masses.size != n_bodies:
             raise ValueError(f"Masses must have length {n_bodies}, got {masses.size}")
 
+        L = N // 2
 
-        Y_new = []
+        Y_pos = Y[:L].copy()
+        Y_velocities = Y[L:].copy()
 
-        for i in range(n_bodies,N):
-            Y_new.append(Y[i])
-
-        Y_pos = []
-
-        for i in range(n_bodies):
-            Y_pos.append(Y[i])
-
-        L = len(Y_pos)
+        Y_dot = np.empty(N,dtype = float)
+        Y_acceleration = np.empty(L,dtype = float)
 
         for i in range(0,L,2):
 
@@ -81,13 +80,13 @@ class StarSystem:
 
                     ay = ay + (mass_j * self.gravitational_constant *(pos_j[1]-pos_i[1]))/cubed_distance
 
+            Y_acceleration[i] = ax
+            Y_acceleration[i+1] = ay
 
-            Y_new.extend([ax,ay])
 
-
-
-        Y_new = np.array(Y_new,dtype = float)
-        return Y_new
+        Y_dot[:L] = Y_velocities
+        Y_dot[L:] = Y_acceleration
+        return Y_dot
 
 
     def calculateTrajectories(self, step_size, end_time, method = "RKScipy"):
