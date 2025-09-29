@@ -38,6 +38,7 @@ class SystemSolver:
 
 
         Y_0 = np.array(Y_0,dtype = float)
+        masses = np.array(masses,dtype = float)
 
         trajectory.append(Y_0)
 
@@ -75,6 +76,7 @@ class SystemSolver:
             Y_0.append(vel_y)
 
         Y_0 = np.array(Y_0, dtype=float)
+        masses = np.array(masses, dtype=float)
 
         trajectory.append(Y_0)
 
@@ -113,6 +115,7 @@ class SystemSolver:
             Y_0.append(vel_y)
 
         Y_0 = np.array(Y_0, dtype=float)
+        masses = np.array(masses, dtype=float)
 
         return scipy.integrate.solve_ivp(fun=lambda t, y: starSystem.getSystemDerivative(t, y, masses),t_span = [0,end_time],y0 = Y_0)
 
