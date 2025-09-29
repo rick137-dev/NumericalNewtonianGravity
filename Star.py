@@ -4,14 +4,13 @@ class Star:
     def __init__(self, initial_position, initial_velocity, mass):
         self.initial_position = initial_position
         self.initial_velocity = initial_velocity
-        self.mass = mass
-
+        self.mass = float(mass)
 
     def getMass(self):
         return self.mass
 
     def changeMass(self, mass):
-        self.mass = mass
+        self.mass = float(mass)
 
     def getPosition(self):
         return self.initial_position
