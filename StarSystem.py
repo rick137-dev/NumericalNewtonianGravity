@@ -27,10 +27,10 @@ class StarSystem:
         return len(self.stars)
 
     @staticmethod
-    def getDistance(pos_1, pos_2):
+    def getSquaredDistance(pos_1, pos_2):
         x1, y1 = pos_1
         x2, y2 = pos_2
-        return np.sqrt((x1-x2)**2 + (y1-y2)**2)
+        return (x1-x2)**2 + (y1-y2)**2
 
 
     def getCubedDistance(self,pos_1, pos_2):
@@ -64,8 +64,8 @@ class StarSystem:
         N = Y.size
         L = N // 2
 
-        Y_pos = Y[:L].copy()
-        Y_velocities = Y[L:].copy()
+        Y_pos = Y[:L]
+        Y_velocities = Y[L:]
 
         mergedStars = False
 
@@ -79,9 +79,8 @@ class StarSystem:
                 vel_j = [Y_velocities[j], Y_velocities[j + 1]]
                 mass_j = masses[j // 2]
 
-                distance = StarSystem.getDistance(pos_i,pos_j)
 
-                if distance < self.merge_distance and mass_i >0 and mass_j >0:
+                if mass_i >0 and mass_j >0 and StarSystem.getSquaredDistance(pos_i,pos_j)<self.merge_distance**2:
                     mergedStars = True
                     new_star1_position, new_star2_position, new_star1_velocity, new_star2_velocity, new_star1_mass, new_star2_mass = StarSystem.mergeStars(pos_i,vel_i,pos_j,vel_j,mass_i,mass_j)
 
