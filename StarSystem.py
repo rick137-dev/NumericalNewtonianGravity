@@ -59,7 +59,7 @@ class StarSystem:
 
 
 
-    #Here we assume Y and masses are already numpy
+    #Here we assume Y and masses are already numpy arrays
     def enforceMergeEvent(self, time, Y: np.array, masses : np.array):
         N = Y.size
         L = N // 2
@@ -161,3 +161,9 @@ class StarSystem:
     def calculateTrajectories(self, step_size, end_time, method = "RKScipy"):
         return SystemSolver.generalSolver(self, step_size, end_time, method)
 
+
+    def updateTrajectories(self,step_size, end_time, method = "RKScipy"):
+        self.system_trajectories = self.calculateTrajectories(step_size, end_time, method = "RKScipy")
+
+    def getCurrentTrajectories(self):
+        return self.system_trajectories
